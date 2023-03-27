@@ -9,15 +9,18 @@ public class PlayerControl : MonoBehaviour
     private AudioSource playerAudio;
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
+
     public float jumpForce;
     public float gravityModifier;
     public bool isOnGround = true;
     public bool gameOver;
+
     public AudioClip jumpSound;
     public AudioClip crashSound;
 
     public bool doubleJumpUsed = false;
     public float doubleJumpForce;
+
     public bool doubleSpeed = false;
 
 
@@ -52,7 +55,7 @@ public class PlayerControl : MonoBehaviour
             playerAnim.Play("Running_Jump", 3, 0f);
             playerAudio.PlayOneShot(jumpSound, 1.0f);
         }
-        if(Input.GetKey(KeyCode.LeftShift))\
+        if(Input.GetKey(KeyCode.LeftShift))
         {
             doubleSpeed = true;
             playerAnim.SetFloat("Speed_Multiplier", 2.0f);
