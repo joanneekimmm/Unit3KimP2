@@ -6,14 +6,14 @@ public class GameManager : MonoBehaviour
 {
     //store our score value and reference our player
     public float score;
-    private PlayerController playerControllerScript;
+    private PlayerControl playerControllerScript;
 
     public Transform startingPoint;
     public float lerpSpeed;
     
     void Start()
     {
-        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerControl>();
         score = 0;
 
         playerControllerScript.gameOver = true;
@@ -37,22 +37,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    IEnumerator PlayerIntro()
+    IEnumerator PlayIntro()
     {
         Vector3 startPos = playerControllerScript.transform.position;
         Vector3 endPos = startingPoint.position;
-        float journerLength = Vector3.Distance(startPos, endPos);
-        float startTime = startTime.time;
+        float journeyLength = Vector3.Distance(startPos, endPos);
+        float startTime = Time.time;
 
         float distanceCovered = (Time.time - startTime) * lerpSpeed;
-        float fractionOfJourney = distanceCovered / journerLength;
+        float fractionOfJourney = distanceCovered / journeyLength;
 
         playerControllerScript.GetComponent<Animator>().SetFloat("Speed_Multiplier", 0.5f);
 
         while (fractionOfJourney < 1)
         {
-            distanceCovered = (Time.time = startTime) * lerpSpeed;
-            fractionOfJourney = distanceCovered / journerLength;
+            distanceCovered = (Time.time - startTime) * lerpSpeed;
+            fractionOfJourney = distanceCovered / journeyLength;
             playerControllerScript.transform.position = Vector3.Lerp(startPos, endPos, fractionOfJourney);
             yield return null;
         }
