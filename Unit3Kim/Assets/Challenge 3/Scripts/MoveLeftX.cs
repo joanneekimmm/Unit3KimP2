@@ -6,7 +6,7 @@ public class MoveLeftX : MonoBehaviour
 {
     public float speed = 30;
     private PlayerControllerX playerControllerScript;
-    private float leftBound = -10;
+    private float leftBound = -15;
   
 
     // Start is called before the first frame update
@@ -25,7 +25,12 @@ public class MoveLeftX : MonoBehaviour
         }
 
         // If object goes off screen that is NOT the background, destroy it
-        if (transform.position.x < leftBound && !gameObject.CompareTag("Obstacle"))
+        if (transform.position.x < leftBound && !gameObject.CompareTag("Bomb"))
+        {
+            Destroy(gameObject);
+        }
+
+        if(transform.position.x < leftBound && !gameObject.CompareTag("Money"))
         {
             Destroy(gameObject);
         }

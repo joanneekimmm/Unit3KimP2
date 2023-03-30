@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerControllerX : MonoBehaviour
 {
     public bool gameOver;
+    public bool isLowEnough; 
 
     public float floatForce;
     private float gravityModifier = 1.5f;
@@ -41,6 +42,9 @@ public class PlayerControllerX : MonoBehaviour
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); 
        
         }
+
+        
+      
     }
 
     private void OnCollisionEnter(Collision other)
