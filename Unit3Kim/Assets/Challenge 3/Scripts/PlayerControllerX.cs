@@ -5,10 +5,16 @@ using UnityEngine;
 public class PlayerControllerX : MonoBehaviour
 {
     public bool gameOver;
-    public bool isLowEnough; 
+    public bool isLowEnough;
+    
 
     public float floatForce;
     private float gravityModifier = 1.5f;
+    public float jumpForce; 
+    
+    //you have to make the variable jumpForce.
+
+
     public Rigidbody playerRb;
 
     public ParticleSystem explosionParticle;
@@ -17,10 +23,8 @@ public class PlayerControllerX : MonoBehaviour
     private AudioSource playerAudio;
     public AudioClip moneySound;
     public AudioClip explodeSound;
-
-    private float upBoundary;
-    public float jumpForce;
     
+    public bool tooHigh;
 
     // Start is called before the first frame update
     void Start()
@@ -28,22 +32,29 @@ public class PlayerControllerX : MonoBehaviour
         Physics.gravity *= gravityModifier;
         playerAudio = GetComponent<AudioSource>();
         playerRb = GetComponent<Rigidbody>();
-        upBoundary = 13;
+        // apply a small upward force at the start of the game
+        playerRb.AddForce(Vector3.up * 5, ForceMode.Impulse);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (transform.position.y > 12)
+        {
+            tooHigh = false;
+        }
+        else
+        {
+            tooHigh = true;
+        }
         // While space is pressed and player is low enough, float up
-        if (Input.GetKey(KeyCode.Space) && transform.position.y < upBoundary && !gameOver)
+        if (Input.GetKey(KeyCode.Space) && tooHigh && !gameOver)
         {
 
             // Apply a small upward force at the start of the game
-            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); 
+            playerRb.AddForce(Vector3.up * floatForce); 
        
         }
-
-        
       
     }
 
@@ -67,6 +78,10 @@ public class PlayerControllerX : MonoBehaviour
             playerAudio.PlayOneShot(moneySound, 1.0f);
             Destroy(other.gameObject);
 
+        }
+        else if (other.gameObject.CompareTag("Ground") && !gameOver)
+        {
+            playerRb.AddForce(Vector3.up * 10, ForceMode.Impulse);
         }
 
     }
